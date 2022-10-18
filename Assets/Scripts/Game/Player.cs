@@ -16,11 +16,11 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        if (rb.velocity.y > 0.5f)
+        if (GameManager.inGame && rb.velocity.y > 0.5f)
             this.transform.rotation = Quaternion.Euler(0f, 180f, -15f);
-        else if (rb.velocity.y < -0.5f)
+        else if (GameManager.inGame && rb.velocity.y < -0.5f)
             this.transform.rotation = Quaternion.Euler(0f, 180f, 15f);
-        else
+        else if (GameManager.inGame)
             this.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
     }
 
@@ -35,7 +35,10 @@ public class Player : MonoBehaviour
     private void OnCollisionEnter(Collision col)
     {
         if(col.transform.tag.Equals("Tube"))
+        {
             Collision?.Invoke();
+            rb.freezeRotation = false;
+        }
     }
 
     private void OnTriggerEnter(Collider col)

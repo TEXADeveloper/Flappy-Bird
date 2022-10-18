@@ -5,10 +5,25 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     [HideInInspector] public static bool inGame = true;
-    [SerializeField] private TMP_Text text;
-    [SerializeField] private TMP_Text finalText;
+    [SerializeField] private TMP_Text scoreText;
+    [SerializeField] private TMP_Text finalScoreText;
+    [SerializeField] private TMP_Text highScoreText;
     [SerializeField] private GameObject losePanel;
+    [SerializeField] private GameObject newRecord;
     int score = 0;
+    int highScore = 0;
+
+    public int GetHighScore()
+    {
+        return highScore;
+    }
+
+    void Awake()
+    {
+        GameData data = SaveAndLoad.Load();
+        if (data != null)
+            highScore = data.highScore;
+    }
 
     void Start()
     {
@@ -19,14 +34,21 @@ public class GameManager : MonoBehaviour
     private void updateScore()
     {
         score++;
-        text.text = score.ToString();
+        scoreText.text = score.ToString();
     }
 
     private void endGame()
     {
         inGame = false;
         losePanel.SetActive(true);
-        finalText.text = "Score: " + score.ToString();
+        if (highScore < score)
+        {
+            highScore = score;
+            SaveAndLoad.Save(this);
+            newRecord.SetActive(true);
+        }
+        finalScoreText.text = "Score: " + score.ToString();
+        highScoreText.text = "HighScore: " + highScore.ToString();
     }
 
     public static void ReloadScene()

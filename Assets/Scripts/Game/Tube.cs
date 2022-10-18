@@ -9,6 +9,7 @@ public class Tube : MonoBehaviour
     void Start()
     {  
         Player.Collision += collision;
+        Player.Point += speedUp;
     }
 
     void Update()
@@ -22,8 +23,14 @@ public class Tube : MonoBehaviour
         collisioned = true;
     }
 
+    private void speedUp()
+    {
+        speed += 0.02f;
+    }
+
     void OnDisable()
     {
         Player.Collision -= collision;
+        Player.Point -= speedUp;
     }
 }
