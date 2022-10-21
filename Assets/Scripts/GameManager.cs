@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TMP_Text highScoreText;
     [SerializeField] private GameObject losePanel;
     [SerializeField] private GameObject newRecord;
+    [SerializeField] private AudioSource scoreSfx;
     int score = 0;
     int highScore = 0;
 
@@ -35,6 +36,7 @@ public class GameManager : MonoBehaviour
     {
         score++;
         scoreText.text = score.ToString();
+        scoreSfx.Play();
     }
 
     private void endGame()

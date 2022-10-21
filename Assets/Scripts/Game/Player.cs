@@ -4,6 +4,7 @@ using System;
 public class Player : MonoBehaviour
 {
     [SerializeField, Range(0f, 20f)] float force = 5f;
+    [SerializeField] AudioSource flap;
     Rigidbody rb;
 
     public static event Action Point;
@@ -27,8 +28,10 @@ public class Player : MonoBehaviour
     public void Tap()
     {
         if (GameManager.inGame)
+        {
             rb.velocity = new Vector3(0, force, 0);
-        else
+            flap.Play();
+        } else
             GameManager.ReloadScene();
     }
 

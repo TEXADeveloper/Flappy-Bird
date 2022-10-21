@@ -3,12 +3,14 @@ using UnityEngine;
 public class InfiniteScroll : MonoBehaviour
 {
     [SerializeField, Range(0f, 20f)] private float speed;
-    [SerializeField] private float width;
-    Vector3 startPos;
+    private float width;
+    private Vector3 startPos;
 
     void Start()
     {
         Player.Point += speedUp;
+
+        width = this.GetComponent<BoxCollider>().size.x;
         startPos = this.transform.position;
     }
 
