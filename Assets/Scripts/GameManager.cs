@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using System;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -13,17 +14,44 @@ public class GameManager : MonoBehaviour
     [SerializeField] private AudioSource scoreSfx;
     int score = 0;
     int highScore = 0;
+    int birdSkin = 0;
+    int tubeSkin = 0;
 
     public int GetHighScore()
     {
         return highScore;
+    }
+    public int GetBirdSkin()
+    {
+        return birdSkin;
+    }
+
+    public int GetTubeSkin()
+    {
+        return tubeSkin;
+    }
+
+    public void UpdateBirdSkin(int num)
+    {
+        birdSkin = num;
+        SaveAndLoad.Save(this);
+    }
+
+    public void UpdateTubeSkin(int num)
+    {
+        tubeSkin = num;
+        SaveAndLoad.Save(this);
     }
 
     void Awake()
     {
         GameData data = SaveAndLoad.Load();
         if (data != null)
+        {
             highScore = data.highScore;
+            birdSkin = data.birdSkin;
+            tubeSkin = data.tubeSkin;
+        }
     }
 
     void Start()

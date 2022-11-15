@@ -3,13 +3,15 @@ using UnityEngine;
 public class TubeController : MonoBehaviour
 {
     [SerializeField] private Transform[] tubes;
-    [Range(0f,12f)] private float distance = 6f;
-    private int index = -1;
+    [SerializeField, Range(0f,12f)] private float distance = 6f;
+    [SerializeField] int tubeGap = 2;
+    private int index;
 
     void Start()
     {
         Player.Point += teleportTube;
 
+        index = -1 * tubeGap;
         foreach (Transform tube in tubes)
             randomHeight(tube);
     }
@@ -18,7 +20,7 @@ public class TubeController : MonoBehaviour
     {
         if (index >= 0)
         {
-            tubes[index].position = new Vector3(tubes[index].position.x + 4 * distance, tubes[index].position.y, 0f);
+            tubes[index].position = new Vector3(tubes[index].position.x + tubes.Length * distance, tubes[index].position.y, 0f);
             randomHeight(tubes[index]);
         }
         index = (index < tubes.Length - 1) ? index + 1 : 0;
